@@ -65,17 +65,6 @@ class FavoriteCurrencyController extends Controller
         Auth::user()->favoriteCurrencies()->where('currency_code', $currencyCode)->delete();
         return back()->with('success', 'Usunięto ulubioną walutę.');
     }
-    public function destroyAll1()
-    {
-        try {
-            $userId = auth()->id();
-            Auth::user()->favoriteCurrencies()->delete();
-            return back()->with('success', 'Usunięto wszystkie ulubione waluty1.');;
-        } catch (\Exception $e) {
-            Log::error('Błąd podczas usuwania ulubionych walut.', ['user_id' => $userId, 'error' => $e->getMessage()]);
-            return back()->withErrors('Wystąpił błąd podczas usuwania ulubionych walut.');
-        }
-    }
     public function destroyAll()
     {
         try {

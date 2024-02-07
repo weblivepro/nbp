@@ -45,7 +45,7 @@
                         <form action="{{ route('favorite-currencies.destroy', $currency['code']) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-warning" type="submit">Usuń</button>
+                            <button class="btn btn-warning" onclick="deleteConfirm(event)">Usuń</button>
                         </form>
                     </td>
                 </tr>
@@ -57,7 +57,7 @@
             <form action="{{ route('favorite-currencies.destroy-all') }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger" type="submit">Usuń wszystkie waluty</button>
+                <button class="btn btn-danger" onclick="deleteConfirm(event)">Usuń wszystkie waluty</button>
             </form>
 
             @if(session('success'))
@@ -82,7 +82,25 @@
         @endif
     </div>
 
-
-
 </div>
+<script type="text/javascript">
+    window.deleteConfirm = function(e) {
+        e.preventDefault();
+        var form = e.target.form;
+        Swal.fire({
+            title: "Czy jesteś pewien?",
+            text: "Ta operacja jest nieodwracalna!",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Anuluj",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Tak usuń!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+            });
+    }
+    </script>
 @endsection
